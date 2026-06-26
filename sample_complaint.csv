@@ -1,0 +1,54 @@
+id,complaint,payment_type,failure_date,expected_category
+1,"My UPI payment of Rs 5000 to Swiggy failed on June 1st. Amount debited from my account but not received by merchant.",Merchant,2026-06-01,TECHNICAL_GLITCH
+2,"Unauthorized transaction of Rs 15000 from my account. I did not initiate this payment. Please investigate immediately.",P2P,2026-06-10,CRITICAL_FRAUD
+3,"Payment declined at POS terminal but amount deducted twice. Double deduction of Rs 2500.",Merchant,2026-06-05,TECHNICAL_GLITCH
+4,"My refund of Rs 1200 is pending since June 1st. Merchant confirmed reversal but amount not credited back.",Merchant,2026-06-01,TECHNICAL_GLITCH
+5,"OTP was shared unknowingly and Rs 15000 was transferred from my account without my authorization.",P2P,2026-06-08,CRITICAL_FRAUD
+6,"UPI transaction timed out but money got deducted from my account. Transaction ID T2506061234567 shows failed.",P2P,2026-06-06,TECHNICAL_GLITCH
+7,"Someone hacked my UPI ID 9876543210@paytm and transferred Rs 8000 without my knowledge.",P2P,2026-06-12,CRITICAL_FRAUD
+8,"Server down error while making payment at Amazon. Amount of Rs 3200 debited but order not placed.",Merchant,2026-06-03,TECHNICAL_GLITCH
+9,"Received phishing link on WhatsApp. Clicked it and Rs 25000 was debited from my account.",P2P,2026-06-14,CRITICAL_FRAUD
+10,"My EMI payment of Rs 4500 got stuck in pending state for 3 days. Amount debited but not settled.",Merchant,2026-06-02,TECHNICAL_GLITCH
+11,"Unauthorized debit of Rs 999 from my account at 3am. I was sleeping and did not make this transaction.",P2P,2026-06-15,CRITICAL_FRAUD
+12,"Payment failed at Zomato but amount of Rs 450 was deducted. Order was not placed.",Merchant,2026-06-04,TECHNICAL_GLITCH
+13,"My PAN ABCDE1234F was used for a transaction I never made. Fraud transaction of Rs 12000.",P2P,2026-06-11,CRITICAL_FRAUD
+14,"UPI payment to my friend failed showing transaction declined but Rs 2000 was deducted from my account.",P2P,2026-06-07,TECHNICAL_GLITCH
+15,"Scam call received. Caller asked for OTP saying they are from bank. Rs 20000 transferred without consent.",P2P,2026-06-09,CRITICAL_FRAUD
+16,"Amount deducted for flight booking on MakeMyTrip but ticket not generated. Rs 8500 stuck.",Merchant,2026-06-03,TECHNICAL_GLITCH
+17,"My Aadhaar 1234 5678 9012 was used to open account without my knowledge. Fraud detected.",P2P,2026-06-13,CRITICAL_FRAUD
+18,"Double payment charged for same order on Flipkart. Rs 1299 debited twice for one transaction.",Merchant,2026-06-05,TECHNICAL_GLITCH
+19,"Unknown transaction of Rs 5500 at a merchant I have never visited. Not done by me.",P2P,2026-06-16,CRITICAL_FRAUD
+20,"NEFT transfer of Rs 10000 stuck in pending for 2 days. Amount debited but not received by beneficiary.",P2P,2026-06-04,TECHNICAL_GLITCH
+21,"Received fake UPI collect request. Approved thinking it was refund. Rs 7000 debited.",P2P,2026-06-10,CRITICAL_FRAUD
+22,"Payment gateway error on Myntra. Rs 2199 deducted but order shows payment failed.",Merchant,2026-06-06,TECHNICAL_GLITCH
+23,"My card was compromised and used for online shopping worth Rs 45000 that I never did.",P2P,2026-06-12,CRITICAL_FRAUD
+24,"Auto debit for Netflix failed but amount of Rs 649 was deducted from account.",Merchant,2026-06-08,TECHNICAL_GLITCH
+25,"Someone used my UPI ID to receive money from multiple people. Fraud complaint.",P2P,2026-06-15,CRITICAL_FRAUD
+26,"Payment timed out on IRCTC during ticket booking. Rs 1200 deducted but ticket not booked.",Merchant,2026-06-07,TECHNICAL_GLITCH
+27,"Hacked account. Multiple small transactions of Rs 499 each done without my knowledge. Total Rs 2994.",P2P,2026-06-11,CRITICAL_FRAUD
+28,"Merchant payment of Rs 3500 to local grocery store failed. Amount debited not received by merchant.",Merchant,2026-06-09,TECHNICAL_GLITCH
+29,"Received SMS about transaction I never made. Rs 18000 transferred to unknown account.",P2P,2026-06-14,CRITICAL_FRAUD
+30,"Settlement pending for 5 days on my payment gateway account. Rs 25000 not credited to my bank.",Merchant,2026-06-01,TECHNICAL_GLITCH
+31,"UPI payment failed during Diwali sale on Amazon. Rs 5999 deducted but item not ordered.",Merchant,2026-06-02,TECHNICAL_GLITCH
+32,"Phishing website stole my card details. Rs 32000 fraudulent transaction detected.",P2P,2026-06-13,CRITICAL_FRAUD
+33,"Refund from Flipkart not received after 7 days. Rs 899 still not credited back to account.",Merchant,2026-06-05,TECHNICAL_GLITCH
+34,"Fake customer care number found online. Shared account details. Rs 11000 stolen.",P2P,2026-06-16,CRITICAL_FRAUD
+35,"Transaction declined at petrol pump but Rs 2000 deducted from account. Amount not refunded.",Merchant,2026-06-08,TECHNICAL_GLITCH
+36,"My account was used for money mule activity without my consent. Multiple suspicious transfers.",P2P,2026-06-10,CRITICAL_FRAUD
+37,"Bill payment for electricity failed but Rs 1850 deducted. BESCOM shows payment not received.",Merchant,2026-06-04,TECHNICAL_GLITCH
+38,"Received call from fake RBI officer. Transferred Rs 50000 under pressure. This is fraud.",P2P,2026-06-15,CRITICAL_FRAUD
+39,"Insurance premium payment failed on PolicyBazaar. Rs 12000 deducted but policy not activated.",Merchant,2026-06-06,TECHNICAL_GLITCH
+40,"Card cloned at ATM. Rs 28000 withdrawn from different city while I was at home.",P2P,2026-06-11,CRITICAL_FRAUD
+41,"I would like to know the process for updating my mobile number linked to UPI.",P2P,2026-06-20,GENERAL
+42,"Can you tell me the daily UPI transaction limit on my account?",P2P,2026-06-22,GENERAL
+43,"My account statement shows a transaction from last month I want to verify.",Merchant,2026-06-18,GENERAL
+44,"Payment of Rs 150 failed at a small shop. Resolved automatically next day.",Merchant,2026-06-23,TECHNICAL_GLITCH
+45,"UPI transfer of Rs 500 to friend shows pending but friend received it. Minor confusion.",P2P,2026-06-24,TECHNICAL_GLITCH
+46,"I want to check the status of my UPI payment made yesterday.",P2P,2026-06-24,GENERAL
+47,"Please help me understand why my transaction limit was reduced.",P2P,2026-06-23,GENERAL
+48,"I need a copy of my transaction receipt for a payment made last week.",Merchant,2026-06-18,GENERAL
+49,"My UPI app is showing incorrect balance. Need clarification.",P2P,2026-06-22,GENERAL
+50,"Payment of Rs 200 to local vendor shows pending but vendor says received.",Merchant,2026-06-24,TECHNICAL_GLITCH
+51,"I accidentally sent Rs 100 to wrong UPI ID. Want to know refund process.",P2P,2026-06-23,GENERAL
+52,"My bank passbook and UPI history showing different balance. Need help understanding.",P2P,2026-06-21,GENERAL
+53,"Transaction of Rs 300 at medical store shows processing for 2 hours. Small amount.",Merchant,2026-06-24,TECHNICAL_GLITCH

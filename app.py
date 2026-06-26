@@ -14,8 +14,7 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-
-# Initialize database on startup
+ 
 initialize_db()
 
 # POST /api/audit
@@ -25,7 +24,7 @@ def audit():
     try:
         data = request.get_json()
 
-        # Validate input
+        
         if not data or not data.get('complaint'):
             return jsonify({"error": "complaint field is required"}), 400
 
@@ -54,7 +53,7 @@ def audit():
         try:
             ai_result = get_ai_response(masked_complaint, tat_result)
         except Exception as ai_error:
-            # Fallback if AI fails
+            #if AI fails
             ai_result = {
                 "summary": "Complaint received and logged for compliance review.",
                 "recommended_urgency": "HIGH" if risk_category == "CRITICAL_FRAUD" else "MEDIUM",
@@ -78,7 +77,7 @@ def audit():
 
         record_id = insert_record(record)
 
-        # Return full response
+        #full response
         return jsonify({
             "id": record_id,
             "masked_complaint": masked_complaint,
