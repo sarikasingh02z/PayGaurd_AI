@@ -19,10 +19,10 @@ def load_samples():
                 })
                 if response.status_code == 200:
                     success += 1
-                    print(f"✓ Loaded complaint {row['id']}")
+                    print(f"Loaded complaint {row['id']}")
                 else:
                     failed += 1
-                    print(f"✗ Failed complaint {row['id']}: {response.text}")
+                    print(f"Failed complaint {row['id']}: {response.text}")
             except Exception as e:
                 failed += 1
                 print(f"✗ Error on complaint {row['id']}: {e}")
