@@ -27,6 +27,7 @@ def initialize_db():
             ai_summary          TEXT,
             ai_urgency          TEXT,
             agent_script        TEXT,
+            merchant_name       TEXT DEFAULT 'Unknown Merchant',
             created_at          TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
@@ -43,8 +44,9 @@ def insert_record(data: dict):
             INSERT INTO compliance_ledger (
                 raw_complaint, masked_complaint, risk_category,
                 tat_deadline, accrued_penalty, complaint_age_days,
-                overdue_days, status, ai_summary, ai_urgency, agent_script
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                overdue_days, status, ai_summary, ai_urgency,
+                agent_script, merchant_name
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             data.get("raw_complaint"),
             data.get("masked_complaint"),
@@ -56,7 +58,8 @@ def insert_record(data: dict):
             data.get("status", "OPEN"),
             data.get("ai_summary"),
             data.get("ai_urgency"),
-            data.get("agent_script")
+            data.get("agent_script"),
+            data.get("merchant_name", "Unknown Merchant")
         ))
         conn.commit()
         return cursor.lastrowid
@@ -83,6 +86,5 @@ def fetch_all_records():
     finally:
         conn.close()
 
-# Run this file directly to initialize the database
 if __name__ == "__main__":
     initialize_db()
