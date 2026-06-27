@@ -19,20 +19,34 @@ TECHNICAL_GLITCH_KEYWORDS = [
     "not credited", "payment stuck", "deducted twice"
 ]
 
+KNOWN_MERCHANTS = [
+    "flipkart", "amazon", "swiggy", "zomato", "myntra", "paytm",
+    "phonepe", "gpay", "google pay", "uber", "ola",
+    "makemytrip", "irctc", "netflix", "zepto", "blinkit",
+    "meesho", "nykaa", "bigbasket"
+]
+
 def classify_text(masked_text):
     if not masked_text or not masked_text.strip():
         return "UNKNOWN"
     
     text_lower = masked_text.lower()
     
-    # Regex patterns for fraud — higher precision
+    #check fraud
     for pattern in CRITICAL_FRAUD_PATTERNS:
         if re.search(pattern, text_lower):
             return "CRITICAL_FRAUD"
     
-    # Plain keywords for technical glitches
+    #check technical glitch 
     for keyword in TECHNICAL_GLITCH_KEYWORDS:
         if keyword in text_lower:
             return "TECHNICAL_GLITCH"
     
     return "GENERAL"
+
+def extract_merchant(complaint_text):
+    text_lower = complaint_text.lower()
+    for merchant in KNOWN_MERCHANTS:
+        if merchant in text_lower:
+            return merchant.title()
+    return "Unknown Merchant"
