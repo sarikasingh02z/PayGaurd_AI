@@ -4,7 +4,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from datetime import datetime
 from masker import mask_text
-from keyword_engine import classify_text
+from keyword_engine import classify_text, extract_merchant
 from tat_clock import calculate_tat
 from AI_orchestrator import get_ai_response
 from database import initialize_db, insert_record, fetch_all_records
@@ -32,33 +32,35 @@ def audit():
         if not raw_complaint:
             return jsonify({"error": "complaint cannot be empty"}), 400
 
-        # Validate and sanitize input text using prompt_firewall
+        #prompt_firewall
         is_valid, sanitized_text = validate_input(raw_complaint)
         if not is_valid:
             return jsonify({"error": sanitized_text}), 400
 
-        # STATION 1 — PII Masking
+        #STATION 1 — PII Masking
         masked_complaint = mask_text(sanitized_text)
 
-        # STATION 2 — Keyword Classification
+        #STATION 2 — Keyword Classification
         risk_category = classify_text(masked_complaint)
 
-        # STATION 3 — TAT & Penalty Calculation
+        merchant_name = extract_merchant(raw_complaint)
+
+        #STATION 3 — TAT & Penalty Calculation
         tat_result = calculate_tat(payment_type, failure_date)
         tat_result['payment_type'] = payment_type
 
-        # STATION 4 — AI Response Generation
+        #STATION 4 — AI Response Generation
         try:
             ai_result = get_ai_response(masked_complaint, tat_result)
         except Exception as ai_error:
-            # if AI fails
+            #default
             ai_result = {
                 "summary": "Complaint received and logged for compliance review.",
                 "recommended_urgency": "HIGH" if risk_category == "CRITICAL_FRAUD" else "MEDIUM",
                 "suggested_agent_script": "Dear customer, your complaint has been received and escalated to our compliance team. We will resolve this within the RBI mandated timeline."
             }
 
-        # STATION 5 — Save to Database
+        #STATION 5 — Save to Database
         record = {
             "raw_complaint": raw_complaint,
             "masked_complaint": masked_complaint,
@@ -70,15 +72,17 @@ def audit():
             "status": tat_result['status'],
             "ai_summary": ai_result['summary'],
             "ai_urgency": ai_result['recommended_urgency'],
-            "agent_script": ai_result['suggested_agent_script']
+            "agent_script": ai_result['suggested_agent_script'],
+            "merchant_name": merchant_name
         }
         record_id = insert_record(record)
 
-        # full response
+        #full response
         return jsonify({
             "id": record_id,
             "masked_complaint": masked_complaint,
             "risk_category": risk_category,
+            "merchant_name": merchant_name,
             "tat_deadline": tat_result['tat_deadline'],
             "complaint_age_days": tat_result['complaint_age_days'],
             "overdue_days": tat_result['overdue_days'],
