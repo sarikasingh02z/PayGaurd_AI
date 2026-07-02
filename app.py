@@ -9,13 +9,10 @@ import sqlite3
 import os
 from groq import Groq
 
-# Initialize Groq client
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-# --- Page Config ---
 st.set_page_config(page_title="PayGuard AI", layout="wide", page_icon="🛡️")
 
-# --- CSS ---
 st.markdown("""
     <style>
         .stApp { background-color: #0d0f14; color: #ffffff; }
@@ -26,7 +23,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- Sidebar ---
+#Sidebar
 with st.sidebar:
     st.image("https://img.icons8.com/color/96/000000/security-checked--v1.png", width=60)
     st.title("🛡️ PayGuard AI")
@@ -44,11 +41,9 @@ with st.sidebar:
     ])
     st.markdown("---")
 
-# ============================================================
 # BACKEND LOGIC
-# ============================================================
 
-# --- 1. PII Masker ---
+#  PII Masker
 PHONE_REGEX = re.compile(r'(?:\+91[-\s]?)?\b[6-9]\d{9}\b')
 AADHAAR_REGEX = re.compile(r'\b\d{4}[-\s]?\d{4}[-\s]?\d{4}\b')
 EMAIL_REGEX = re.compile(r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b')
@@ -67,7 +62,7 @@ def mask_text(text):
     text = TRANSACTION_REF_REGEX.sub('[REDACTED]', text)
     return text
 
-# --- 2. Keyword Classification ---
+#Keyword Classification
 CRITICAL_FRAUD_PATTERNS = [
     r"(unauthorized|fraud|scam|hacked)\s+(transaction|debit|credit|payment|transfer)",
     r"(not\s+done\s+by\s+me|not\s+my\s+transaction)",
@@ -151,7 +146,7 @@ def extract_merchant(complaint_text):
             return merchant.title()
     return "Unknown Merchant"
 
-# --- 3. TAT Clock ---
+#TAT Clock
 def calculate_tat(payment_type, failure_date_str):
     failure_date = datetime.strptime(failure_date_str, "%Y-%m-%d").date()
     today = datetime.now().date()
@@ -179,7 +174,7 @@ def calculate_tat(payment_type, failure_date_str):
         "status": status
     }
 
-# --- 4. Prompt Firewall ---
+# Prompt Firewall
 def validate_input(complaint_text):
     if not complaint_text or not complaint_text.strip():
         return False, "Complaint text is empty."
@@ -231,7 +226,7 @@ def validate_input(complaint_text):
     
     return True, sanitized_text.strip()
 
-# --- 5. AI Orchestrator (GROQ) ---
+#AI Orchestrator
 def get_ai_response(masked_complaint, tat_result, risk_category=None):
     """
     Get AI response from Groq with urgency override based on risk category.
@@ -311,7 +306,7 @@ Respond ONLY in this exact JSON format, no markdown, no extra text:
                 "suggested_agent_script": "Dear customer, we have received your request and will get back to you within 2 working days."
             }
 
-# --- 6. Database (SQLite) ---
+#SQLite
 DB_PATH = "enterprise_compliance.db"
 
 def get_connection():
@@ -392,7 +387,7 @@ def fetch_all_records():
     finally:
         conn.close()
 
-# --- 7. Main Processing Function ---
+#Main Processing Function
 def generate_complaint_id():
     return f"CMP-{datetime.now().strftime('%Y%m%d%H%M%S')}"
 
@@ -450,15 +445,15 @@ def process_complaint(complaint_text, payment_type, failure_date):
         "agent_script": ai_result['suggested_agent_script']
     }, None
 
-# ============================================================
+
 # INITIALIZE DATABASE
-# ============================================================
+
 initialize_db()
 records = fetch_all_records()
 
-# ============================================================
+
 # PAGE 1 — SUBMIT COMPLAINT
-# ============================================================
+
 if page == "Submit Complaint":
     st.subheader("Submit a Complaint")
     st.caption("Complaint runs through all 5 stations automatically")
@@ -577,9 +572,7 @@ if page == "Submit Complaint":
                 del st.session_state['last_result']
                 st.rerun()
 
-# ============================================================
 # PAGE 2 — COMPLAINT REPLAY
-# ============================================================
 elif page == "Complaint Replay":
     st.subheader("Complaint Replay — 5-Station Pipeline Viewer")
     st.caption("Select any past complaint to see exactly how it was processed")
@@ -656,9 +649,8 @@ elif page == "Complaint Replay":
     else:
         st.info("No complaints available. Submit one first.")
 
-# ============================================================
+
 # PAGE 3 — BANK COMPLIANCE MONITOR
-# ============================================================
 elif page == "Bank Compliance Monitor":
     st.title("Bank Compliance Monitor")
     st.caption("Hypothetical scenario modeling — RBI TAT breach impact on penalty exposure")
